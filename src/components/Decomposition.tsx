@@ -1,5 +1,6 @@
 import { Button, Combobox, Heading, Pane, TextInput, Switch, Label, Tooltip, InfoSignIcon } from "evergreen-ui"
 import { useState } from "react";
+import { Graph } from "./Graph";
 
 export const Decomposition = () => {
 
@@ -44,8 +45,10 @@ export const Decomposition = () => {
         <Button marginTop={16} appearance="primary">
           Decompose
         </Button>
-      </Pane>
 
+        
+      </Pane>
+      <Graph></Graph>
     </Pane>
   )
 }

@@ -3,10 +3,11 @@ import { useEffect, useState } from "react";
 import ForceGraph2D from 'react-force-graph-2d';
 import ForceGraph3D from 'react-force-graph-3d';
 
-const Graph = () => {
+export const Graph = () => {
 
   let [data, setData] = useState(undefined)
   const [controls] = useState({ 'DAG Orientation': 'td'});
+  
   const requestOptions = {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
@@ -30,6 +31,8 @@ const Graph = () => {
       {
         data == undefined ? <h1>data loading...</h1> :
           <ForceGraph2D
+            width={1000}
+            height={1000}
             backgroundColor="white"
             linkColor={_ => "gray"}
             linkWidth={0.5}
