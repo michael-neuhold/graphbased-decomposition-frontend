@@ -1,5 +1,6 @@
 import { Button, Combobox, Heading, Pane, TextInput, Switch, Label, Tooltip, InfoSignIcon, Tablist, Tab, Paragraph } from "evergreen-ui"
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { Configuration, GitRepository, RepositoryControllerImplApi } from "../api";
 import { Graph } from "./Graph";
 
 export const Decomposition = () => {
@@ -10,6 +11,7 @@ export const Decomposition = () => {
   const [dependencyCoupling, detDependencyCoupling] = useState(false)
 
 
+  const [repositories, setRepositories] = useState<GitRepository[]>([])
   const [selectedIndex, setSelectedIndex] = useState(0)
   const [tabs] = useState(
     [
@@ -20,6 +22,17 @@ export const Decomposition = () => {
         name: 'Result',
       }
     ])
+
+  const config = new Configuration();
+
+  useEffect(() => {
+    const fetchData = async () => {
+      const api = new RepositoryControllerImplApi(config, "http://localhost:8080");
+      const repos = await api.getAllRepositoriesUsingGET();
+      setRepositories(repos.data);
+    }
+    fetchData().catch(console.error);
+  }, [])
 
   return (
     <Pane>
@@ -48,7 +61,7 @@ export const Decomposition = () => {
                 <Pane paddingBottom={10}>
 
                   <Combobox
-                    items={['Repository 1', 'Repository 2', 'Repository 3', 'Repository 4']}
+                    items={repositories.map(repo => repo.name)}
                     onChange={selected => console.log(selected)}
                     placeholder="Repository"
                   />
@@ -78,7 +91,7 @@ export const Decomposition = () => {
                 </Pane>)
               :
               (
-                <Graph></Graph>
+                <Graph repositoryId={} decompositionParameters={}></Graph>
               )
           }
         </Pane>

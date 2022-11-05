@@ -3,8 +3,9 @@ import { useEffect, useState } from "react";
 
 import ForceGraph2D from 'react-force-graph-2d';
 import ForceGraph3D from 'react-force-graph-3d';
+import { Configuration, DecompositionControllerImplApi, DecompositionCouplingParameters } from "../api";
 
-export const Graph = () => {
+export const Graph = (repositoryId: number, decompositionParameters: DecompositionCouplingParameters) => {
 
   let [data, setData] = useState(undefined)
   const [controls] = useState({ 'DAG Orientation': 'td'});
@@ -20,7 +21,17 @@ export const Graph = () => {
     })
   };
 
+  const config = new Configuration();
+  
   useEffect(() => {
+
+    const callDecomposition = async () => {
+      const api = new DecompositionControllerImplApi(config, "http://localhost:8080");
+      api.decomposeRepositoryByIdAsGraphVisualizationUsingPOST(repositoryId, decompositionParameters);
+    }
+
+    callDecomposition().catch(console.error);
+
     //fetch("http://localhost:8080/decompositions/decompose/1689/visualization", requestOptions)
     fetch("http://localhost:8080/decompositions/monolith/49511/coupling/visualization", requestOptions)
       .then(response => response.json())
