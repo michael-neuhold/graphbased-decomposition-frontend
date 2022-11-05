@@ -1,3 +1,4 @@
+import { Pane, Spinner } from "evergreen-ui";
 import { useEffect, useState } from "react";
 
 import ForceGraph2D from 'react-force-graph-2d';
@@ -27,12 +28,12 @@ export const Graph = () => {
   }, [])
   
   return (
-    <div className="App" >
+    <Pane>
       {
-        data == undefined ? <h1>data loading...</h1> :
+        data == undefined ? <h1>loading</h1> :
           <ForceGraph2D
-            width={1000}
-            height={1000}
+            width={1200}
+            height={700}
             backgroundColor="white"
             linkColor={_ => "gray"}
             linkWidth={0.5}
@@ -61,7 +62,7 @@ export const Graph = () => {
             linkDirectionalParticleSpeed={(d: any) => d.value * 0.02}
             graphData={data} />
       }
-    </div>
+    </Pane>
   )
 
 }

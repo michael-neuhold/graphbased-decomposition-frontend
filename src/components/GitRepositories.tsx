@@ -1,39 +1,26 @@
 import { Button, Heading, Pane, Table, TextInput } from "evergreen-ui"
+import { useEffect, useState } from "react"
+import { Configuration, GitRepository, RepositoryControllerImplApi, RepositoryControllerImplApiFactory } from "../api"
+
+
+const config = new Configuration();
 
 export const GitRepositories = () => {
 
-  const repositories = [
-    {
-      id: 1,
-      name: "Repo1",
-      url: "http://github.com/aaaaa"
-    },
-    {
-      id: 2,
-      name: "Repo1",
-      url: "http://github.com/aaaaa"
-    },
-    {
-      id: 3,
-      name: "Repo1",
-      url: "http://github.com/aaaaa"
-    },
-    {
-      id: 4,
-      name: "Repo1",
-      url: "http://github.com/aaaaa"
-    },
-    {
-      id: 5,
-      name: "Repo1",
-      url: "http://github.com/aaaaa"
+  const [repositories, setRepositories] = useState<GitRepository[]>([])
+  
+  useEffect(() => {
+    const fetchData = async () => {
+      const api = new RepositoryControllerImplApi(config, "http://localhost:8080");
+      const repos = await api.getAllRepositoriesUsingGET();
+      setRepositories(repos.data);
     }
-
-  ]
+   fetchData().catch(console.error);
+  }, [])
 
   return (
     <Pane>
-      <Heading size={500} padding={20}>
+      <Heading size={500} paddingBottom={20}>
         Git Repository
       </Heading>
 
@@ -55,7 +42,7 @@ export const GitRepositories = () => {
             <Table.Row key={repository.id}>
               <Table.TextCell>{repository.id}</Table.TextCell>
               <Table.TextCell>{repository.name}</Table.TextCell>
-              <Table.TextCell>{repository.url}</Table.TextCell>
+              <Table.TextCell>{repository.remotePath}</Table.TextCell>
             </Table.Row>
           ))}
         </Table.Body>

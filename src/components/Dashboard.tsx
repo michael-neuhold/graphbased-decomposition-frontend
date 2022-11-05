@@ -3,6 +3,7 @@ import React from "react"
 import { Decomposition } from "./Decomposition"
 import { Evaluation } from "./Evaluation"
 import { GitRepositories } from "./GitRepositories"
+import { Monolith } from "./Monolith"
 
 const tabsList = [
   {
@@ -12,6 +13,10 @@ const tabsList = [
   {
     name: "Decomposition",
     tab: <Decomposition></Decomposition>
+  },
+  {
+    name: "Monolith",
+    tab: <Monolith></Monolith>
   },
   {
     name: "Evaluation",
@@ -38,7 +43,7 @@ export const Dashboard = () => {
           </SidebarTab>
         ))}
       </Tablist>
-      <Pane padding={16} background="gray50" flex="1">
+      <Pane padding={16} flex="1">
         {tabs.map((tab, index) => (
           <Pane
             key={tab.name}
