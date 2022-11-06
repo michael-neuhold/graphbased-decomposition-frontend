@@ -3,7 +3,6 @@ import { useEffect, useState } from "react"
 import { Link } from "react-router-dom"
 import { Configuration, GitRepository, RepositoryControllerImplApi } from "../api"
 import { API_BASE_URL, API_CONFIG } from "../config"
-import { Graph } from "./Graph"
 
 export const Monolith = () => {
 
@@ -32,8 +31,6 @@ export const Monolith = () => {
         placeholder="Repository"
         marginBottom={20}
       />
-
-   
 
     </Pane>
   )

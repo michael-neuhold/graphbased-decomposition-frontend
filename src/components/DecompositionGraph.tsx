@@ -20,14 +20,14 @@ export const DecompositionGraph = () => {
     intervalSeconds: 3600
   }
   
-  const [data, setData] = useState<GraphData>();
+  const [data, setData] = useState<any>(undefined);
 
   useEffect(() => {
     const callDecomposition = async () => {
       const api = new DecompositionControllerImplApi(API_CONFIG, API_BASE_URL);
       const response = await api.decomposeRepositoryByIdAsGraphVisualizationUsingPOST(repositoryId, decompositionParameters);
       console.log(response.data)
-      setData(response.data as GraphData);
+      setData(response.data);
     }
     callDecomposition().catch(console.error);
 
@@ -35,8 +35,6 @@ export const DecompositionGraph = () => {
 
   return (
     <Pane>
-      {
-        data == undefined ? <Spinner></Spinner> :
           <ForceGraph2D
             backgroundColor="white"
             linkColor={_ => "gray"}
@@ -65,7 +63,6 @@ export const DecompositionGraph = () => {
             linkDirectionalParticles="value"
             linkDirectionalParticleSpeed={(d: any) => d.value * 0.02}
             graphData={data} />
-      }
     </Pane>
   )
 
