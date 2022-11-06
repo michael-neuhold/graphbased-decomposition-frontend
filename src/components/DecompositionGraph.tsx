@@ -1,20 +1,44 @@
-import { Pane, Spinner } from "evergreen-ui";
+import { Pane } from "evergreen-ui";
 import { useEffect, useState } from "react";
+import { useLocation } from "react-router-dom";
+import { DecompositionControllerImplApi, DecompositionCouplingParametersDto, GraphVisualizationDto } from "../api";
+import { API_BASE_URL, API_CONFIG } from "../config";
+import { Graph } from "./Graph";
 
-import ForceGraph2D from 'react-force-graph-2d';
-import ForceGraph3D from 'react-force-graph-3d';
-import { Configuration, DecompositionControllerImplApi, DecompositionCouplingParameters } from "../api";
+import ForceGraph2D, { GraphData } from 'react-force-graph-2d';
 
-export const Graph = (data: any) => {
-  console.log("test")
-  console.log(data)
+export const DecompositionGraph = () => {
+
+  const location = useLocation();
+  const repositoryId = location.state?.id;
+  const decompositionParameters: DecompositionCouplingParametersDto = {
+    semanticCoupling: location.state?.semanticCoupling,
+    logicalCoupling: location.state?.semanticCoupling,
+    contributorCoupling: location.state?.semanticCoupling,
+    dependencyCoupling: location.state?.semanticCoupling,
+    numberOfServices: 3,
+    classClusterThreshold: 3,
+    intervalSeconds: 3600
+  }
+  console.log(decompositionParameters)
+  const [data, setData] = useState<GraphData>();
+
+  useEffect(() => {
+    const callDecomposition = async () => {
+      const api = new DecompositionControllerImplApi(API_CONFIG, API_BASE_URL);
+      const response = await api.decomposeRepositoryByIdAsGraphVisualizationUsingPOST(repositoryId, decompositionParameters);
+      console.log(response.data)
+      setData(response.data as GraphData);
+    }
+    callDecomposition().catch(console.error);
+
+  }, [])
+
   return (
     <Pane>
       {
         data == undefined ? <h1>loading</h1> :
           <ForceGraph2D
-            width={1200}
-            height={700}
             backgroundColor="white"
             linkColor={_ => "gray"}
             linkWidth={0.5}

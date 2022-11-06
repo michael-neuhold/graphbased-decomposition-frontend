@@ -1,6 +1,8 @@
-import { Button, Combobox, Heading, Pane, TextInput, Switch, Label, Tooltip, InfoSignIcon, Tablist, Tab, Paragraph } from "evergreen-ui"
+import { Button, Combobox, Heading, Pane, TextInput, Switch, Label, Tooltip, InfoSignIcon, Tablist, Tab, Paragraph, Checkbox, Select, SelectMenu, Option } from "evergreen-ui"
 import { useEffect, useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
 import { Configuration, GitRepository, RepositoryControllerImplApi } from "../api";
+import { API_BASE_URL, API_CONFIG } from "../config";
 import { Graph } from "./Graph";
 
 export const Decomposition = () => {
@@ -8,26 +10,21 @@ export const Decomposition = () => {
   const [semanticCoupling, setSemanticCoupling] = useState(false)
   const [logicalCoupling, setLogicalCoupling] = useState(false)
   const [contributorCoupling, setContributorCoupling] = useState(false)
-  const [dependencyCoupling, detDependencyCoupling] = useState(false)
+  const [dependencyCoupling, setDependencyCoupling] = useState(false)
 
 
   const [repositories, setRepositories] = useState<GitRepository[]>([])
-  const [selectedIndex, setSelectedIndex] = useState(0)
-  const [tabs] = useState(
-    [
-      {
-        name: 'Settings'
-      },
-      {
-        name: 'Result',
-      }
-    ])
+  const [selectedRepository, setSelectedRepository] = useState<GitRepository>()
 
-  const config = new Configuration();
+  const [data, setData] = useState(false);
+  const navigate = useNavigate();
+  const navigateTo = () => {
+    navigate('/decomposition/graph', { state: { id: 7, color: 'green' } });
+  }
 
   useEffect(() => {
     const fetchData = async () => {
-      const api = new RepositoryControllerImplApi(config, "http://localhost:8080");
+      const api = new RepositoryControllerImplApi(API_CONFIG, API_BASE_URL);
       const repos = await api.getAllRepositoriesUsingGET();
       setRepositories(repos.data);
     }
@@ -36,65 +33,32 @@ export const Decomposition = () => {
 
   return (
     <Pane>
-      <Heading size={500} paddingBottom={20}>
-        Decomposition
-      </Heading>
-
-      <Pane height={120}>
-        <Tablist marginBottom={16} flexBasis={240} marginRight={24}>
-          {tabs.map((tab, index) => (
-            <Tab
-              key={tab.name}
-              id={tab.name}
-              onSelect={() => setSelectedIndex(index)}
-              isSelected={index === selectedIndex}
-              aria-controls={`panel-${tab}`}
-            >
-              {tab.name}
-            </Tab>
-          ))}
-        </Tablist>
-        <Pane flex="1">
-          {
-            selectedIndex == 0 ?
-              (
-                <Pane paddingBottom={10}>
-
-                  <Combobox
-                    items={repositories.map(repo => repo.name)}
-                    onChange={selected => console.log(selected)}
-                    placeholder="Repository"
-                  />
-
-                  <Pane>
-                    <Pane display="flex" flexDirection="row" paddingTop={10}>
-                      <Switch padding={2} checked={semanticCoupling} onChange={(e) => setSemanticCoupling(e.target.checked)} />
-                      <Label marginLeft={10}>Semantic Coupling</Label>
-                    </Pane>
-                    <Pane display="flex" flexDirection="row" paddingTop={10}>
-                      <Switch padding={2} checked={logicalCoupling} onChange={(e) => setLogicalCoupling(e.target.checked)} />
-                      <Label marginLeft={10}>Logical Coupling</Label>
-                    </Pane>
-                    <Pane display="flex" flexDirection="row" paddingTop={10}>
-                      <Switch padding={2} checked={contributorCoupling} onChange={(e) => setContributorCoupling(e.target.checked)} />
-                      <Label marginLeft={10}>Contributor Coupling</Label>
-                    </Pane>
-                    <Pane display="flex" flexDirection="row" paddingTop={10}>
-                      <Switch padding={2} checked={dependencyCoupling} onChange={(e) => detDependencyCoupling(e.target.checked)} />
-                      <Label marginLeft={10}>Dependency Coupling</Label>
-                    </Pane>
-                  </Pane>
-
-                  <Button marginTop={16} appearance="primary">
-                    Decompose
-                  </Button>
-                </Pane>)
-              :
-              (
-                <Graph repositoryId={} decompositionParameters={}></Graph>
-              )
-          }
-        </Pane>
+      <Pane paddingBottom={10} display="flex" flexDirection="column">
+        <Checkbox
+          margin={4}
+          label="Semantic Coupling"
+          checked={semanticCoupling}
+          onChange={e => setSemanticCoupling(e.target.checked)}
+        />
+        <Checkbox
+          margin={4}
+          label="Logical Coupling"
+          checked={logicalCoupling}
+          onChange={e => setLogicalCoupling(e.target.checked)}
+        />
+        <Checkbox
+          margin={0}
+          label="Contributor Coupling"
+          checked={contributorCoupling}
+          onChange={e => setContributorCoupling(e.target.checked)}
+        />
+        <Checkbox
+          margin={0}
+          label="Dependency Coupling"
+          checked={dependencyCoupling}
+          onChange={e => setDependencyCoupling(e.target.checked)}
+        />
+        <Button onClick={navigateTo}>Decompose</Button>
       </Pane>
     </Pane>
   )

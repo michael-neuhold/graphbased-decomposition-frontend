@@ -1,10 +1,23 @@
-import { Combobox, Heading, Pane } from "evergreen-ui"
-import { useState } from "react"
+import { Button, Combobox, Heading, Pane } from "evergreen-ui"
+import { useEffect, useState } from "react"
+import { Link } from "react-router-dom"
+import { Configuration, GitRepository, RepositoryControllerImplApi } from "../api"
+import { API_BASE_URL, API_CONFIG } from "../config"
 import { Graph } from "./Graph"
 
 export const Monolith = () => {
 
-  const [selectedIndex, setSelectedIndex] = useState(0)
+  const [repositories, setRepositories] = useState<GitRepository[]>([])
+  const [selectedRepository, setSelectedRepository] = useState<GitRepository>()
+
+  useEffect(() => {
+    const fetchData = async () => {
+      const api = new RepositoryControllerImplApi(API_CONFIG, API_BASE_URL);
+      const repos = await api.getAllRepositoriesUsingGET();
+      setRepositories(repos.data);
+    }
+    fetchData().catch(console.error);
+  }, [])
 
   return (
     <Pane>
@@ -13,13 +26,14 @@ export const Monolith = () => {
       </Heading>
 
       <Combobox
-        items={['Repository 1', 'Repository 2', 'Repository 3', 'Repository 4']}
-        onChange={selected => console.log(selected)}
+        items={repositories}
+        itemToString={repository => repository ? repository.name : ''}
+        onChange={selected => setSelectedRepository(selected)}
         placeholder="Repository"
         marginBottom={20}
       />
 
-      <Graph></Graph>
+   
 
     </Pane>
   )

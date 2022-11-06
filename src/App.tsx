@@ -1,36 +1,30 @@
 import './App.css';
 
-import { useEffect, useState } from 'react';
 import { Header } from './components/Header';
 import { Dashboard } from './components/Dashboard';
+import ReactDOM from 'react-dom';
+import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+import { MonolithGraph } from './components/MonolithGraph';
+import { DecompositionGraph } from './components/DecompositionGraph';
 
-function App() {
-
-  let [data, setData] = useState(undefined)
-  const [controls] = useState({ 'DAG Orientation': 'td'});
-  const requestOptions = {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({
-      "logicalCoupling": false,
-      "semanticCoupling": true,
-      "contributorCoupling": false,
-      "intervalSeconds": 3600,
-    })
-  };
-
-  useEffect(() => {
-    //fetch("http://localhost:8080/decompositions/decompose/1689/visualization", requestOptions)
-    fetch("http://localhost:8080/decompositions/monolith/49511/coupling/visualization", requestOptions)
-      .then(response => response.json())
-      .then(data => setData(data))
-  }, [])
-
+const Overview = () => {
   return (
     <>
       <Header></Header>
       <Dashboard></Dashboard>
     </>
+  )
+}
+
+function App() {
+  return (
+    <Router>
+      <Routes>
+        <Route path="/" element={<Overview></Overview>} />
+        <Route path="/monolith/graph" element={<MonolithGraph></MonolithGraph>} />
+        <Route path="/decomposition/graph" element={<DecompositionGraph></DecompositionGraph>} />
+      </Routes>
+    </Router>
   );
 }
 
@@ -38,6 +32,21 @@ export default App;
 
 
 {/*
+
+import React from 'react';
+import ReactDOM from 'react-dom';
+import { BrowserRouter as Router, Route } from 'react-router-dom';
+
+const Example = () => <p>Example Komponente</p>;
+
+const App = () => {
+  return (
+    
+  );
+};
+
+ReactDOM.render(<App />, document.getElementById('root'));
+
   nodeCanvasObject={(node: any, ctx: CanvasRenderingContext2D, globalScale: any) => {
     const label = node.id;
     const fontSize = 12/globalScale;
