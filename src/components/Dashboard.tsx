@@ -1,22 +1,12 @@
-import { Pane, Paragraph, SidebarTab, Tablist } from "evergreen-ui"
+import { Pane, Tab, Tablist } from "evergreen-ui"
 import React from "react"
-import { Decomposition } from "./Decomposition"
 import { Evaluation } from "./Evaluation"
 import { GitRepositories } from "./GitRepositories"
-import { Monolith } from "./Monolith"
 
 const tabsList = [
   {
     name: "Git Repositories",
     tab: <GitRepositories></GitRepositories>
-  },
-  {
-    name: "Decomposition",
-    tab: <Decomposition></Decomposition>
-  },
-  {
-    name: "Monolith",
-    tab: <Monolith></Monolith>
   },
   {
     name: "Evaluation",
@@ -32,7 +22,8 @@ export const Dashboard = () => {
     <Pane display="flex" padding={10}>
       <Tablist marginBottom={16} flexBasis={240} marginRight={24}>
         {tabs.map((tab, index) => (
-          <SidebarTab
+          <Tab
+            direction="vertical"
             key={tab.name}
             id={tab.name}
             onSelect={() => setSelectedIndex(index)}
@@ -40,7 +31,7 @@ export const Dashboard = () => {
             aria-controls={`panel-${tab.name}`}
           >
             {tab.name}
-          </SidebarTab>
+          </Tab>
         ))}
       </Tablist>
       <Pane padding={16} flex="1">

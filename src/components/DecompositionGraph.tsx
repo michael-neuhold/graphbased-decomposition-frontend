@@ -1,9 +1,8 @@
-import { Pane } from "evergreen-ui";
+import { Pane, Spinner } from "evergreen-ui";
 import { useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
-import { DecompositionControllerImplApi, DecompositionCouplingParametersDto, GraphVisualizationDto } from "../api";
+import { DecompositionControllerImplApi, DecompositionCouplingParametersDto } from "../api";
 import { API_BASE_URL, API_CONFIG } from "../config";
-import { Graph } from "./Graph";
 
 import ForceGraph2D, { GraphData } from 'react-force-graph-2d';
 
@@ -20,7 +19,7 @@ export const DecompositionGraph = () => {
     classClusterThreshold: 3,
     intervalSeconds: 3600
   }
-  console.log(decompositionParameters)
+  
   const [data, setData] = useState<GraphData>();
 
   useEffect(() => {
@@ -37,7 +36,7 @@ export const DecompositionGraph = () => {
   return (
     <Pane>
       {
-        data == undefined ? <h1>loading</h1> :
+        data == undefined ? <Spinner></Spinner> :
           <ForceGraph2D
             backgroundColor="white"
             linkColor={_ => "gray"}

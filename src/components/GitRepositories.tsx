@@ -1,8 +1,7 @@
-import { Button, Checkbox, Dialog, Heading, Link, Pane, Table, TextInput, TextInputField } from "evergreen-ui"
-import { ChangeEvent, useEffect, useState } from "react"
+import { Button, Checkbox, Dialog, Heading, Link, Pane, Table, TextInput } from "evergreen-ui"
+import { useEffect, useState } from "react"
 import { useNavigate } from "react-router-dom";
-import { Configuration, GitRepository, RepositoryControllerImplApi, RepositoryControllerImplApiFactory } from "../api"
-import { Decomposition } from "./Decomposition";
+import { Configuration, GitRepository, RepositoryControllerImplApi } from "../api"
 
 
 const config = new Configuration();
@@ -16,17 +15,19 @@ export const GitRepositories = () => {
   const [dependencyCoupling, setDependencyCoupling] = useState(false)
 
   const [selectedRepository, setSelectedRepository] = useState<GitRepository>()
-  
+
   const [repositories, setRepositories] = useState<GitRepository[]>([])
   const [newRepository, setNewRepository] = useState("")
   const [addedRepository, setAddedRepository] = useState(0)
+
   const [isShown, setIsShown] = useState(false)
+  const [isShownMonolithDialog, setIsShownMonolithDialog] = useState(false)
 
 
   const addNewRepository = () => {
     const addRepository = async () => {
       const api = new RepositoryControllerImplApi(config, "http://localhost:8080");
-      const response = api.addRepositoryUsingPOST({uri: newRepository})
+      const response = api.addRepositoryUsingPOST({ uri: newRepository })
     }
     addRepository().catch(console.error);
     setAddedRepository(addedRepository + 1);
@@ -34,10 +35,24 @@ export const GitRepositories = () => {
   }
 
   const navigate = useNavigate();
-  const navigateTo = () => {
-    navigate('/decomposition/graph', { state: { id: selectedRepository?.id, semanticCoupling: semanticCoupling, contributorCoupling: contributorCoupling, logicalCoupling: logicalCoupling, dependencyCoupling: dependencyCoupling } });
+  const navigateToDecomposition = () => {
+    navigate('/decomposition/graph', 
+      { 
+        state: { 
+          id: selectedRepository?.id, 
+          semanticCoupling: semanticCoupling, 
+          contributorCoupling: contributorCoupling, 
+          logicalCoupling: logicalCoupling, 
+          dependencyCoupling: dependencyCoupling 
+        } 
+      }
+    );
   }
-  
+
+  const navigateToMonolith = () => {
+    navigate('/monolith/graph', { state: { id: selectedRepository?.id } });
+  }
+
   useEffect(() => {
     const fetchData = async () => {
       const api = new RepositoryControllerImplApi(config, "http://localhost:8080");
@@ -54,7 +69,7 @@ export const GitRepositories = () => {
       </Heading>
 
       <Pane paddingBottom={10}>
-        <TextInput name="repository-url-input" placeholder="https://github.com/denver-code/nftgenerator" value={newRepository} onChange={(e: any) => setNewRepository(e.target.value)}/>
+        <TextInput name="repository-url-input" placeholder="https://github.com/denver-code/nftgenerator" value={newRepository} onChange={(e: any) => setNewRepository(e.target.value)} />
         <Button appearance="primary" marginLeft={24} onClick={addNewRepository}>
           Add
         </Button>
@@ -74,7 +89,7 @@ export const GitRepositories = () => {
               <Table.TextCell>{repository.name}</Table.TextCell>
               <Table.TextCell><Link href={repository.remotePath} target="blank">{repository.remotePath}</Link></Table.TextCell>
               <Table.Cell>
-                <Button marginRight={24}>Monolith</Button>
+                <Button onClick={() => setIsShownMonolithDialog(true)} marginRight={24}>Monolith</Button>
                 <Button onClick={() => setIsShown(true)}>Microservice suggestions</Button>
               </Table.Cell>
             </Table.Row>
@@ -82,43 +97,55 @@ export const GitRepositories = () => {
         </Table.Body>
       </Table>
       <Pane>
-      <Dialog
-        isShown={isShown}
-        title="Decomposition parameters"
-        intent="primary"
-        onCloseComplete={() => {
-          setIsShown(false);
-          navigateTo();
-        }
-        }
-        confirmLabel="Decompose"
-      >
-        <Checkbox
-          margin={4}
-          label="Semantic Coupling"
-          checked={semanticCoupling}
-          onChange={e => setSemanticCoupling(e.target.checked)}
-        />
-        <Checkbox
-          margin={4}
-          label="Logical Coupling"
-          checked={logicalCoupling}
-          onChange={e => setLogicalCoupling(e.target.checked)}
-        />
-        <Checkbox
-          margin={4}
-          label="Contributor Coupling"
-          checked={contributorCoupling}
-          onChange={e => setContributorCoupling(e.target.checked)}
-        />
-        <Checkbox
-          margin={4}
-          label="Dependency Coupling"
-          checked={dependencyCoupling}
-          onChange={e => setDependencyCoupling(e.target.checked)}
-        />
-      </Dialog>
-    </Pane>
+        <Dialog
+          isShown={isShown}
+          title="Decomposition parameters"
+          intent="primary"
+          onConfirm={() => {
+            setIsShown(false);
+            navigateToDecomposition();
+          }}
+          onCancel={() => setIsShown(false)}
+          confirmLabel="Decompose"
+        >
+          <Checkbox
+            margin={4}
+            label="Semantic Coupling"
+            checked={semanticCoupling}
+            onChange={e => setSemanticCoupling(e.target.checked)}
+          />
+          <Checkbox
+            margin={4}
+            label="Logical Coupling"
+            checked={logicalCoupling}
+            onChange={e => setLogicalCoupling(e.target.checked)}
+          />
+          <Checkbox
+            margin={4}
+            label="Contributor Coupling"
+            checked={contributorCoupling}
+            onChange={e => setContributorCoupling(e.target.checked)}
+          />
+          <Checkbox
+            margin={4}
+            label="Dependency Coupling"
+            checked={dependencyCoupling}
+            onChange={e => setDependencyCoupling(e.target.checked)}
+          />
+        </Dialog>
+        <Dialog
+          isShown={isShownMonolithDialog}
+          title="Monolith parameters"
+          intent="primary"
+          onConfirm={() => {
+            setIsShown(false);
+            navigateToMonolith();
+          }}
+          onCancel={() => setIsShownMonolithDialog(false)}
+          confirmLabel="Monolith"
+        >
+        </Dialog>
+      </Pane>
     </Pane>
   )
 }
