@@ -1,4 +1,4 @@
-import { Button, Checkbox, Dialog, Heading, Link, Pane, Table, TextInput } from "evergreen-ui"
+import { Button, Checkbox, Dialog, Heading, Link, Pane, Table, TextInput, TextInputField } from "evergreen-ui"
 import { useEffect, useState } from "react"
 import { useNavigate } from "react-router-dom";
 import { Configuration, GitRepository, RepositoryControllerImplApi } from "../api"
@@ -9,10 +9,13 @@ const config = new Configuration();
 export const GitRepositories = () => {
 
 
-  const [semanticCoupling, setSemanticCoupling] = useState(false)
+  const [semanticCoupling, setSemanticCoupling] = useState(true)
   const [logicalCoupling, setLogicalCoupling] = useState(false)
   const [contributorCoupling, setContributorCoupling] = useState(false)
   const [dependencyCoupling, setDependencyCoupling] = useState(false)
+
+  const [numberOfServices, setNumberOfServices] = useState(3)
+  const [threshold, setThreshold] = useState(20)
 
   const [selectedRepository, setSelectedRepository] = useState<GitRepository>()
 
@@ -27,30 +30,41 @@ export const GitRepositories = () => {
   const addNewRepository = () => {
     const addRepository = async () => {
       const api = new RepositoryControllerImplApi(config, "http://localhost:8080");
-      const response = api.addRepositoryUsingPOST({ uri: newRepository })
+      const response = await api.addRepositoryUsingPOST({ uri: newRepository })
+      console.log(response)
+      setAddedRepository(addedRepository + 1);
     }
     addRepository().catch(console.error);
-    setAddedRepository(addedRepository + 1);
     setNewRepository("");
   }
 
   const navigate = useNavigate();
   const navigateToDecomposition = () => {
-    navigate('/decomposition/graph', 
-      { 
-        state: { 
-          id: selectedRepository?.id, 
-          semanticCoupling: semanticCoupling, 
-          contributorCoupling: contributorCoupling, 
-          logicalCoupling: logicalCoupling, 
-          dependencyCoupling: dependencyCoupling 
-        } 
+    navigate('/decomposition/graph',
+      {
+        state: {
+          id: selectedRepository?.id,
+          semanticCoupling: semanticCoupling,
+          contributorCoupling: contributorCoupling,
+          logicalCoupling: logicalCoupling,
+          dependencyCoupling: dependencyCoupling
+        }
       }
     );
   }
 
   const navigateToMonolith = () => {
-    navigate('/monolith/graph', { state: { id: selectedRepository?.id } });
+    navigate('/monolith/graph',
+      {
+        state: {
+          id: selectedRepository?.id,
+          semanticCoupling: semanticCoupling,
+          contributorCoupling: contributorCoupling,
+          logicalCoupling: logicalCoupling,
+          dependencyCoupling: dependencyCoupling
+        }
+      }
+    );
   }
 
   useEffect(() => {
@@ -128,10 +142,13 @@ export const GitRepositories = () => {
           />
           <Checkbox
             margin={4}
+            marginBottom={24}
             label="Dependency Coupling"
             checked={dependencyCoupling}
             onChange={e => setDependencyCoupling(e.target.checked)}
           />
+          <TextInputField required label="Number of Services" name="numberOfServices" placeholder="3" value={numberOfServices} onChange={(e: any) => setNumberOfServices(e.target.value)} ></TextInputField>
+          <TextInputField required label="Threshold" name="threshold" placeholder="20" value={threshold} onChange={(e: any) => setThreshold(e.target.value)} ></TextInputField>
         </Dialog>
         <Dialog
           isShown={isShownMonolithDialog}
@@ -144,6 +161,31 @@ export const GitRepositories = () => {
           onCancel={() => setIsShownMonolithDialog(false)}
           confirmLabel="Monolith"
         >
+          <Checkbox
+            margin={4}
+            label="Semantic Coupling"
+            checked={semanticCoupling}
+            onChange={e => setSemanticCoupling(e.target.checked)}
+          />
+          <Checkbox
+            margin={4}
+            label="Logical Coupling"
+            checked={logicalCoupling}
+            onChange={e => setLogicalCoupling(e.target.checked)}
+          />
+          <Checkbox
+            margin={4}
+            label="Contributor Coupling"
+            checked={contributorCoupling}
+            onChange={e => setContributorCoupling(e.target.checked)}
+          />
+          <Checkbox
+            margin={4}
+            marginBottom={24}
+            label="Dependency Coupling"
+            checked={dependencyCoupling}
+            onChange={e => setDependencyCoupling(e.target.checked)}
+          />
         </Dialog>
       </Pane>
     </Pane>

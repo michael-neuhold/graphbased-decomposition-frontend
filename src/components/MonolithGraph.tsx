@@ -11,20 +11,22 @@ export const MonolithGraph = () => {
   const repositoryId = location.state?.id;
   
   const monolithCouplingParametersDto: MonolithCouplingParametersDto = {
-    semanticCoupling: true,
-    logicalCoupling: true,
-    contributorCoupling: true,
-    dependencyCoupling: true,
+    semanticCoupling: location.state?.semanticCoupling,
+    logicalCoupling: location.state?.logicalCoupling,
+    contributorCoupling: location.state?.contributorCoupling,
+    dependencyCoupling: location.state?.dependencyCoupling,
     intervalSeconds: 3600
   }
 
-  const [data, setData] = useState<GraphData>();
+  const [loading, setLoading] = useState(true);
+  const [data, setData] = useState<any>(undefined);
   
   useEffect(() => {
     const callDecomposition = async () => {
       const api = new DecompositionControllerImplApi(API_CONFIG, API_BASE_URL);
       const response = await api.monolithicCouplingVisualizationUsingPOST(repositoryId, monolithCouplingParametersDto);
-      setData(response.data as GraphData);
+      setData(response.data);
+      setLoading(false);
     }
     callDecomposition().catch(console.error);
 
@@ -32,12 +34,13 @@ export const MonolithGraph = () => {
 
   return (
     <Pane>
-      {
-        data == undefined ? <Spinner></Spinner> :
+       {loading ? 
+          (<Spinner></Spinner>) : (<></>)}
           <ForceGraph2D
             backgroundColor="white"
             linkColor={_ => "gray"}
-            linkWidth={0.5}
+            linkWidth={1}
+            linkLabel="value"
             nodeLabel="label"
             nodeRelSize={8}
             nodeCanvasObject={(node: any, ctx: any, globalScale: any) => {
@@ -62,7 +65,6 @@ export const MonolithGraph = () => {
             linkDirectionalParticles="value"
             linkDirectionalParticleSpeed={(d: any) => d.value * 0.02}
             graphData={data} />
-      }
     </Pane>
   )
 

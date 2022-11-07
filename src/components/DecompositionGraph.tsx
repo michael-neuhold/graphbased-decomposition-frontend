@@ -12,14 +12,15 @@ export const DecompositionGraph = () => {
   const repositoryId = location.state?.id;
   const decompositionParameters: DecompositionCouplingParametersDto = {
     semanticCoupling: location.state?.semanticCoupling,
-    logicalCoupling: location.state?.semanticCoupling,
-    contributorCoupling: location.state?.semanticCoupling,
-    dependencyCoupling: location.state?.semanticCoupling,
+    logicalCoupling: location.state?.logicalCoupling,
+    contributorCoupling: location.state?.contributorCoupling,
+    dependencyCoupling: location.state?.dependencyCoupling,
     numberOfServices: 3,
-    classClusterThreshold: 3,
+    classClusterThreshold: 30,
     intervalSeconds: 3600
   }
   
+  const [loading, setLoading] = useState(true);
   const [data, setData] = useState<any>(undefined);
 
   useEffect(() => {
@@ -28,17 +29,21 @@ export const DecompositionGraph = () => {
       const response = await api.decomposeRepositoryByIdAsGraphVisualizationUsingPOST(repositoryId, decompositionParameters);
       console.log(response.data)
       setData(response.data);
+      setLoading(false);
     }
     callDecomposition().catch(console.error);
 
   }, [])
 
   return (
-    <Pane>
+    <Pane margin="auto"> {
+      loading ? 
+          (<Spinner></Spinner>) : (<></>)}
           <ForceGraph2D
             backgroundColor="white"
             linkColor={_ => "gray"}
-            linkWidth={0.5}
+            linkWidth={1}
+            linkLabel="value"
             nodeLabel="label"
             nodeRelSize={8}
             nodeCanvasObject={(node: any, ctx: any, globalScale: any) => {
