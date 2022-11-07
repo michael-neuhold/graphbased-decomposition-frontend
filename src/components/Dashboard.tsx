@@ -1,5 +1,6 @@
 import { Pane, Tab, Tablist } from "evergreen-ui"
 import React from "react"
+import { Decompositions } from "./Decompositions"
 import { Evaluation } from "./Evaluation"
 import { GitRepositories } from "./GitRepositories"
 
@@ -11,6 +12,10 @@ const tabsList = [
   {
     name: "Evaluation",
     tab: <Evaluation></Evaluation>
+  },
+  {
+    name: "Decompositions",
+    tab: <Decompositions></Decompositions>
   }
 ]
 
