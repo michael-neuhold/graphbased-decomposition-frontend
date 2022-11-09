@@ -32,6 +32,8 @@ export const Decompositions = () => {
           <Table.TextHeaderCell>Logical Coupling</Table.TextHeaderCell>
           <Table.TextHeaderCell>Contributor Coupling</Table.TextHeaderCell>
           <Table.TextHeaderCell>Dependency Coupling</Table.TextHeaderCell>
+          <Table.TextHeaderCell>Number of Service Target</Table.TextHeaderCell>
+          <Table.TextHeaderCell>Service Size Threshold</Table.TextHeaderCell>
           <Table.TextHeaderCell>Action</Table.TextHeaderCell>
         </Table.Head>
         <Table.Body>
@@ -43,6 +45,8 @@ export const Decompositions = () => {
               <Table.TextCell>{decomposition?.parameters?.logicalCoupling ? <TickCircleIcon color="success" marginRight={16} /> : <BanCircleIcon color="danger" marginRight={16} />}</Table.TextCell>
               <Table.TextCell>{decomposition?.parameters?.contributorCoupling ? <TickCircleIcon color="success" marginRight={16} /> : <BanCircleIcon color="danger" marginRight={16} />}</Table.TextCell>
               <Table.TextCell>{decomposition?.parameters?.dependencyCoupling ? <TickCircleIcon color="success" marginRight={16} /> : <BanCircleIcon color="danger" marginRight={16} />}</Table.TextCell>
+              <Table.TextCell>{decomposition?.parameters?.numServices}</Table.TextCell>
+              <Table.TextCell>{decomposition?.parameters?.sizeThreshold}</Table.TextCell>
               <Table.Cell>
                 <Link to={'/visualization/' + decomposition?.decompositionId}><Button marginRight={24}>Graph</Button></Link>
               </Table.Cell>

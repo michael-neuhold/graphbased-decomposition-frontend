@@ -47,7 +47,9 @@ export const GitRepositories = () => {
           semanticCoupling: semanticCoupling,
           contributorCoupling: contributorCoupling,
           logicalCoupling: logicalCoupling,
-          dependencyCoupling: dependencyCoupling
+          dependencyCoupling: dependencyCoupling,
+          numberOfServices: numberOfServices,
+          threshold: threshold
         }
       }
     );
