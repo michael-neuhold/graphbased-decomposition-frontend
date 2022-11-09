@@ -921,6 +921,12 @@ export interface QualityMetricDto {
     'logicalCoupling'?: boolean;
     /**
      * 
+     * @type {number}
+     * @memberof QualityMetricDto
+     */
+    'repositoryId'?: number;
+    /**
+     * 
      * @type {string}
      * @memberof QualityMetricDto
      */
@@ -2283,7 +2289,7 @@ export const EvaluationControllerImplApiFp = function(configuration?: Configurat
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async exportQualityMetricsUsingGET(options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<QualityMetricDto>>> {
+        async exportQualityMetricsUsingGET(options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<Array<QualityMetricDto>>>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.exportQualityMetricsUsingGET(options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
@@ -2312,7 +2318,7 @@ export const EvaluationControllerImplApiFactory = function (configuration?: Conf
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        exportQualityMetricsUsingGET(options?: any): AxiosPromise<Array<QualityMetricDto>> {
+        exportQualityMetricsUsingGET(options?: any): AxiosPromise<Array<Array<QualityMetricDto>>> {
             return localVarFp.exportQualityMetricsUsingGET(options).then((request) => request(axios, basePath));
         },
     };
