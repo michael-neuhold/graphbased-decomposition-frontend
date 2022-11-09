@@ -915,10 +915,22 @@ export interface QualityMetricDto {
     'contributorsPerMicroservice'?: number;
     /**
      * 
+     * @type {number}
+     * @memberof QualityMetricDto
+     */
+    'decompositionId'?: number;
+    /**
+     * 
      * @type {boolean}
      * @memberof QualityMetricDto
      */
     'logicalCoupling'?: boolean;
+    /**
+     * 
+     * @type {number}
+     * @memberof QualityMetricDto
+     */
+    'numberOfServices'?: number;
     /**
      * 
      * @type {number}

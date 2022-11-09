@@ -20,29 +20,29 @@ export const Evaluation = () => {
 
   return (
     <Pane>
-      <Heading size={500} paddingBottom={20}>
-        Evaluation
+      <Heading size={900} paddingBottom={20}>
+        Evaluations
       </Heading>
       <Pane>
       {qualityMetrics?.map(qualityMetricOfRepository => (
-      <>
-      <Heading size={500} paddingBottom={10} paddingTop={30}>
+      <Pane paddingBottom={30} >
+      <Heading size={500} paddingBottom={10}>
         {qualityMetricOfRepository[0].repositoryName + " (" + qualityMetricOfRepository[0].repositoryId + ")"}
       </Heading>
       <Table>
         <Table.Head>
-          <Table.TextHeaderCell>Id</Table.TextHeaderCell>
-          <Table.TextHeaderCell>Name</Table.TextHeaderCell>
-          <Table.TextHeaderCell>averageClassCount</Table.TextHeaderCell>
-          <Table.TextHeaderCell>averageLoc</Table.TextHeaderCell>
-          <Table.TextHeaderCell>contributorOverlapping</Table.TextHeaderCell>
-          <Table.TextHeaderCell>contributorsPerMicroservice</Table.TextHeaderCell>
+          <Table.TextHeaderCell>Decomposition Id</Table.TextHeaderCell>
+          <Table.TextHeaderCell>Number Of Services</Table.TextHeaderCell>
+          <Table.TextHeaderCell>avg. Class Count</Table.TextHeaderCell>
+          <Table.TextHeaderCell>avg. LOC</Table.TextHeaderCell>
+          <Table.TextHeaderCell>contributor Overlapping</Table.TextHeaderCell>
+          <Table.TextHeaderCell>contributors per Microservice</Table.TextHeaderCell>
         </Table.Head>
         <Table.Body>
           {qualityMetricOfRepository.map(qualityMetric => 
             <Table.Row key={qualityMetric.repositoryId}>
-              <Table.TextCell>{qualityMetric.repositoryId}</Table.TextCell>
-              <Table.TextCell>{qualityMetric.repositoryName}</Table.TextCell>
+              <Table.TextCell>{qualityMetric.decompositionId}</Table.TextCell>
+              <Table.TextCell>{qualityMetric.numberOfServices}</Table.TextCell>
               <Table.TextCell>{qualityMetric.averageClassCount}</Table.TextCell>
               <Table.TextCell>{qualityMetric.averageLoc}</Table.TextCell>
               <Table.TextCell>{qualityMetric.contributorOverlapping}</Table.TextCell>
@@ -51,7 +51,7 @@ export const Evaluation = () => {
           )}
         </Table.Body>
       </Table>
-      </>
+      </Pane>
       )) }
       </Pane>
     </Pane>

@@ -72,15 +72,15 @@ export const GitRepositories = () => {
     const repos = await api.getAllRepositoriesUsingGET();
     setRepositories(repos.data);
   }
-  
+
   useEffect(() => {
     fetchData().catch(console.error);
   }, [addedRepository])
 
   return (
     <Pane>
-      <Heading size={500} paddingBottom={20}>
-        Git Repository
+      <Heading size={900} paddingBottom={20}>
+        Git Repositories
       </Heading>
 
       <Pane paddingBottom={10}>

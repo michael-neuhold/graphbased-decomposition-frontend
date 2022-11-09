@@ -20,7 +20,7 @@ export const Decompositions = () => {
 
   return (
     <Pane>
-      <Heading size={500} paddingBottom={20}>
+      <Heading size={900} paddingBottom={20}>
         Decompositions
       </Heading>
 
