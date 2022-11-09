@@ -1,8 +1,9 @@
 import { Pane, Tab, Tablist } from "evergreen-ui"
 import React from "react"
 import { Decompositions } from "./Decompositions"
-import { Evaluation } from "./Evaluation"
+import { QualityMetrics } from "./QualityMetrics"
 import { GitRepositories } from "./GitRepositories"
+import { PerformanceMetrics } from "./PerformanceMetrics"
 
 const tabsList = [
   {
@@ -10,13 +11,17 @@ const tabsList = [
     tab: <GitRepositories></GitRepositories>
   },
   {
-    name: "Evaluation",
-    tab: <Evaluation></Evaluation>
-  },
-  {
     name: "Decompositions",
     tab: <Decompositions></Decompositions>
-  }
+  },
+  {
+    name: "Quality Metrics",
+    tab: <QualityMetrics></QualityMetrics>
+  },
+  {
+    name: "Performance Metrics",
+    tab: <PerformanceMetrics></PerformanceMetrics>
+  },
 ]
 
 export const Dashboard = () => {
