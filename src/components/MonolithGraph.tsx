@@ -21,15 +21,15 @@ export const MonolithGraph = () => {
   const [loading, setLoading] = useState(true);
   const [data, setData] = useState<any>(undefined);
   
+  const callDecomposition = async () => {
+    const api = new DecompositionControllerImplApi(API_CONFIG, API_BASE_URL);
+    const response = await api.monolithicCouplingVisualizationUsingPOST(repositoryId, monolithCouplingParametersDto);
+    setData(response.data);
+    setLoading(false);
+  }
+  
   useEffect(() => {
-    const callDecomposition = async () => {
-      const api = new DecompositionControllerImplApi(API_CONFIG, API_BASE_URL);
-      const response = await api.monolithicCouplingVisualizationUsingPOST(repositoryId, monolithCouplingParametersDto);
-      setData(response.data);
-      setLoading(false);
-    }
     callDecomposition().catch(console.error);
-
   }, [])
 
   return (

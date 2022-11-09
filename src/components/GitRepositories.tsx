@@ -67,12 +67,13 @@ export const GitRepositories = () => {
     );
   }
 
+  const fetchData = async () => {
+    const api = new RepositoryControllerImplApi(config, "http://localhost:8080");
+    const repos = await api.getAllRepositoriesUsingGET();
+    setRepositories(repos.data);
+  }
+  
   useEffect(() => {
-    const fetchData = async () => {
-      const api = new RepositoryControllerImplApi(config, "http://localhost:8080");
-      const repos = await api.getAllRepositoriesUsingGET();
-      setRepositories(repos.data);
-    }
     fetchData().catch(console.error);
   }, [addedRepository])
 

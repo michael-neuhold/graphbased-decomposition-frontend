@@ -39,10 +39,10 @@ export const Decompositions = () => {
             <Table.Row key={decomposition?.decompositionId}>
               <Table.TextCell>{decomposition?.decompositionId}</Table.TextCell>
               <Table.TextCell>{decomposition?.gitRepository?.name}</Table.TextCell>
-              <Table.TextCell>{decomposition?.parameters?.semanticCoupling ? <BanCircleIcon color="danger" marginRight={16} /> : <TickCircleIcon color="success" marginRight={16} />}</Table.TextCell>
-              <Table.TextCell>{decomposition?.parameters?.logicalCoupling ? <BanCircleIcon color="danger" marginRight={16} /> : <TickCircleIcon color="success" marginRight={16} />}</Table.TextCell>
-              <Table.TextCell>{decomposition?.parameters?.contributorCoupling ? <BanCircleIcon color="danger" marginRight={16} /> : <TickCircleIcon color="success" marginRight={16} />}</Table.TextCell>
-              <Table.TextCell>{decomposition?.parameters?.dependencyCoupling ? <BanCircleIcon color="danger" marginRight={16} /> : <TickCircleIcon color="success" marginRight={16} />}</Table.TextCell>
+              <Table.TextCell>{decomposition?.parameters?.semanticCoupling ? <TickCircleIcon color="success" marginRight={16} /> : <BanCircleIcon color="danger" marginRight={16} />}</Table.TextCell>
+              <Table.TextCell>{decomposition?.parameters?.logicalCoupling ? <TickCircleIcon color="success" marginRight={16} /> : <BanCircleIcon color="danger" marginRight={16} />}</Table.TextCell>
+              <Table.TextCell>{decomposition?.parameters?.contributorCoupling ? <TickCircleIcon color="success" marginRight={16} /> : <BanCircleIcon color="danger" marginRight={16} />}</Table.TextCell>
+              <Table.TextCell>{decomposition?.parameters?.dependencyCoupling ? <TickCircleIcon color="success" marginRight={16} /> : <BanCircleIcon color="danger" marginRight={16} />}</Table.TextCell>
               <Table.Cell>
                 <Link to={'/visualization/' + decomposition?.decompositionId}><Button marginRight={24}>Graph</Button></Link>
               </Table.Cell>

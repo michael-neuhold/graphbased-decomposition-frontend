@@ -23,16 +23,15 @@ export const DecompositionGraph = () => {
   const [loading, setLoading] = useState(true);
   const [data, setData] = useState<any>(undefined);
 
-  useEffect(() => {
-    const callDecomposition = async () => {
-      const api = new DecompositionControllerImplApi(API_CONFIG, API_BASE_URL);
-      const response = await api.decomposeRepositoryByIdAsGraphVisualizationUsingPOST(repositoryId, decompositionParameters);
-      console.log(response.data)
-      setData(response.data);
-      setLoading(false);
-    }
-    callDecomposition().catch(console.error);
+  const callDecomposition = async () => {
+    const api = new DecompositionControllerImplApi(API_CONFIG, API_BASE_URL);
+    const response = await api.decomposeRepositoryByIdAsGraphVisualizationUsingPOST(repositoryId, decompositionParameters);
+    setData(response.data);
+    setLoading(false);
+  }
 
+  useEffect(() => {
+    callDecomposition().catch(console.error);
   }, [])
 
   return (
