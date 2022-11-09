@@ -1,26 +1,13 @@
-import { Button, Heading, Pane, Table } from "evergreen-ui"
+import { BanCircleIcon, Button, Heading, Pane, Table, TickCircleIcon } from "evergreen-ui"
 import { useEffect, useState } from "react"
-import { useNavigate } from "react-router-dom";
-import { Configuration, DecompositionControllerImplApi, DecompositionDto } from "../api"
+import { Link, useNavigate } from "react-router-dom";
+import { DecompositionControllerImplApi, DecompositionDto } from "../api"
 import { API_BASE_URL, API_CONFIG } from "../config";
 
 
 export const Decompositions = () => {
 
-  const [selectedDecomposition, setSelectedDecomposition] = useState<DecompositionDto>()
-
   const [decompositions, setDecompositions] = useState<DecompositionDto[]>([])
-
-  const navigate = useNavigate();
-  const navigateToDecomposition = () => {
-    navigate('/decomposition/graph',
-      {
-        state: {
-          id: selectedDecomposition?.decompositionId
-        }
-      }
-    );
-  }
 
   useEffect(() => {
     const fetchData = async () => {
@@ -49,15 +36,15 @@ export const Decompositions = () => {
         </Table.Head>
         <Table.Body>
           {decompositions.map((decomposition) => (
-            <Table.Row key={decomposition?.decompositionId} isSelectable onSelect={() => setSelectedDecomposition(decomposition)}>
+            <Table.Row key={decomposition?.decompositionId}>
               <Table.TextCell>{decomposition?.decompositionId}</Table.TextCell>
               <Table.TextCell>{decomposition?.gitRepository?.name}</Table.TextCell>
-              <Table.TextCell>{decomposition?.parameters?.semanticCoupling ? "True" : "False"}</Table.TextCell>
-              <Table.TextCell>{decomposition?.parameters?.logicalCoupling ? "True" : "False"}</Table.TextCell>
-              <Table.TextCell>{decomposition?.parameters?.contributorCoupling ? "True" : "False"}</Table.TextCell>
-              <Table.TextCell>{decomposition?.parameters?.dependencyCoupling ? "True" : "False"}</Table.TextCell>
+              <Table.TextCell>{decomposition?.parameters?.semanticCoupling ? <BanCircleIcon color="danger" marginRight={16} /> : <TickCircleIcon color="success" marginRight={16} />}</Table.TextCell>
+              <Table.TextCell>{decomposition?.parameters?.logicalCoupling ? <BanCircleIcon color="danger" marginRight={16} /> : <TickCircleIcon color="success" marginRight={16} />}</Table.TextCell>
+              <Table.TextCell>{decomposition?.parameters?.contributorCoupling ? <BanCircleIcon color="danger" marginRight={16} /> : <TickCircleIcon color="success" marginRight={16} />}</Table.TextCell>
+              <Table.TextCell>{decomposition?.parameters?.dependencyCoupling ? <BanCircleIcon color="danger" marginRight={16} /> : <TickCircleIcon color="success" marginRight={16} />}</Table.TextCell>
               <Table.Cell>
-                <Button onClick={() => navigateToDecomposition()} marginRight={24}>Graph</Button>
+                <Link to={'/visualization/' + decomposition?.decompositionId}><Button marginRight={24}>Graph</Button></Link>
               </Table.Cell>
             </Table.Row>
           ))}
