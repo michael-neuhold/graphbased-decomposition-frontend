@@ -49,7 +49,11 @@ export const Decomposition = () => {
               ctx.textBaseline = 'middle';
               ctx.fillStyle = node.color;
               ctx.fillText(label, node.x, node.y - 10);
-              ctx.beginPath(); ctx.arc(node.x, node.y, 5, 0, 2 * Math.PI, false); ctx.fill();
+              if (node.couldBeApi) {
+                ctx.beginPath(); ctx.moveTo(node.x, node.y - 5); ctx.lineTo(node.x - 5, node.y + 5); ctx.lineTo(node.x + 5, node.y + 5); ctx.fill();
+              } else {
+                ctx.beginPath(); ctx.arc(node.x, node.y, 5, 0, 2 * Math.PI, false); ctx.fill();
+              }
               node.__bckgDimensions = bckgDimensions; // to re-use in nodePointerAreaPaint
             }}
             nodeAutoColorBy="group"
