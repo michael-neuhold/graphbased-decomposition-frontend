@@ -592,6 +592,12 @@ export interface GraphVisualizationNodeDto {
     'couldBeApi'?: boolean;
     /**
      * 
+     * @type {boolean}
+     * @memberof GraphVisualizationNodeDto
+     */
+    'couldBeDatabaseAccess'?: boolean;
+    /**
+     * 
      * @type {number}
      * @memberof GraphVisualizationNodeDto
      */

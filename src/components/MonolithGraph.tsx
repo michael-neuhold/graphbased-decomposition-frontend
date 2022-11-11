@@ -58,13 +58,20 @@ export const MonolithGraph = () => {
               ctx.fillStyle = node.color;
               ctx.fillText(label, node.x, node.y - 10);
               if (node.couldBeApi) {
+                ctx.fillStyle = "red";
+                ctx.fillText(label, node.x, node.y - 10);
                 ctx.beginPath(); ctx.moveTo(node.x, node.y - 5); ctx.lineTo(node.x - 5, node.y + 5); ctx.lineTo(node.x + 5, node.y + 5); ctx.fill();
+              } else if (node.couldBeDatabaseAccess) {
+                ctx.fillStyle = "green";
+                ctx.fillText(label, node.x, node.y - 10);
+                ctx.fillRect(node.x - 6, node.y - 4, 12, 8);
               } else {
+                ctx.fillStyle = "black";
+                ctx.fillText(label, node.x, node.y - 10);
                 ctx.beginPath(); ctx.arc(node.x, node.y, 5, 0, 2 * Math.PI, false); ctx.fill();
               }
               node.__bckgDimensions = bckgDimensions; // to re-use in nodePointerAreaPaint
             }}
-            nodeAutoColorBy="group"
             linkDirectionalParticleWidth={3}
             linkDirectionalParticles="value"
             linkDirectionalParticleSpeed={(d: any) => d.value * 0.02}
