@@ -15,6 +15,7 @@ export const MonolithGraph = () => {
     logicalCoupling: location.state?.logicalCoupling,
     contributorCoupling: location.state?.contributorCoupling,
     dependencyCoupling: location.state?.dependencyCoupling,
+    guessClassTask: location.state?.guessClassTask,
     intervalSeconds: 3600
   }
 

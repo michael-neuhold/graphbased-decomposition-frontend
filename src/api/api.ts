@@ -289,6 +289,12 @@ export interface DecompositionCouplingParametersDto {
     'dependencyCoupling'?: boolean;
     /**
      * 
+     * @type {boolean}
+     * @memberof DecompositionCouplingParametersDto
+     */
+    'guessClassTask'?: boolean;
+    /**
+     * 
      * @type {number}
      * @memberof DecompositionCouplingParametersDto
      */
@@ -752,6 +758,12 @@ export interface MonolithCouplingParametersDto {
      * @memberof MonolithCouplingParametersDto
      */
     'dependencyCoupling'?: boolean;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof MonolithCouplingParametersDto
+     */
+    'guessClassTask'?: boolean;
     /**
      * 
      * @type {number}
@@ -1818,14 +1830,18 @@ export const DecompositionControllerImplApiAxiosParamCreator = function (configu
          * 
          * @summary getDecompositionByIdAsVisualization
          * @param {number} decompositionId decompositionId
+         * @param {boolean} guessClassTask guessClassTask
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getDecompositionByIdAsVisualizationUsingGET: async (decompositionId: number, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+        getDecompositionByIdAsVisualizationUsingGET: async (decompositionId: number, guessClassTask: boolean, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'decompositionId' is not null or undefined
             assertParamExists('getDecompositionByIdAsVisualizationUsingGET', 'decompositionId', decompositionId)
-            const localVarPath = `/decompositions/{decompositionId}/visualization`
-                .replace(`{${"decompositionId"}}`, encodeURIComponent(String(decompositionId)));
+            // verify required parameter 'guessClassTask' is not null or undefined
+            assertParamExists('getDecompositionByIdAsVisualizationUsingGET', 'guessClassTask', guessClassTask)
+            const localVarPath = `/decompositions/{decompositionId}/visualization/{guessClassTask}`
+                .replace(`{${"decompositionId"}}`, encodeURIComponent(String(decompositionId)))
+                .replace(`{${"guessClassTask"}}`, encodeURIComponent(String(guessClassTask)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
             let baseOptions;
@@ -1993,11 +2009,12 @@ export const DecompositionControllerImplApiFp = function(configuration?: Configu
          * 
          * @summary getDecompositionByIdAsVisualization
          * @param {number} decompositionId decompositionId
+         * @param {boolean} guessClassTask guessClassTask
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getDecompositionByIdAsVisualizationUsingGET(decompositionId: number, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<GraphVisualizationDto>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getDecompositionByIdAsVisualizationUsingGET(decompositionId, options);
+        async getDecompositionByIdAsVisualizationUsingGET(decompositionId: number, guessClassTask: boolean, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<GraphVisualizationDto>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getDecompositionByIdAsVisualizationUsingGET(decompositionId, guessClassTask, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
         /**
@@ -2089,11 +2106,12 @@ export const DecompositionControllerImplApiFactory = function (configuration?: C
          * 
          * @summary getDecompositionByIdAsVisualization
          * @param {number} decompositionId decompositionId
+         * @param {boolean} guessClassTask guessClassTask
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getDecompositionByIdAsVisualizationUsingGET(decompositionId: number, options?: any): AxiosPromise<GraphVisualizationDto> {
-            return localVarFp.getDecompositionByIdAsVisualizationUsingGET(decompositionId, options).then((request) => request(axios, basePath));
+        getDecompositionByIdAsVisualizationUsingGET(decompositionId: number, guessClassTask: boolean, options?: any): AxiosPromise<GraphVisualizationDto> {
+            return localVarFp.getDecompositionByIdAsVisualizationUsingGET(decompositionId, guessClassTask, options).then((request) => request(axios, basePath));
         },
         /**
          * 
@@ -2192,12 +2210,13 @@ export class DecompositionControllerImplApi extends BaseAPI {
      * 
      * @summary getDecompositionByIdAsVisualization
      * @param {number} decompositionId decompositionId
+     * @param {boolean} guessClassTask guessClassTask
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof DecompositionControllerImplApi
      */
-    public getDecompositionByIdAsVisualizationUsingGET(decompositionId: number, options?: AxiosRequestConfig) {
-        return DecompositionControllerImplApiFp(this.configuration).getDecompositionByIdAsVisualizationUsingGET(decompositionId, options).then((request) => request(this.axios, this.basePath));
+    public getDecompositionByIdAsVisualizationUsingGET(decompositionId: number, guessClassTask: boolean, options?: AxiosRequestConfig) {
+        return DecompositionControllerImplApiFp(this.configuration).getDecompositionByIdAsVisualizationUsingGET(decompositionId, guessClassTask, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**

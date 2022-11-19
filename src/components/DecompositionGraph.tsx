@@ -17,6 +17,7 @@ export const DecompositionGraph = () => {
     dependencyCoupling: location.state?.dependencyCoupling,
     numberOfServices: location.state?.numberOfServices,
     classClusterThreshold: location.state?.threshold,
+    guessClassTask: location.state?.guessClassTask,
     intervalSeconds: 3600
   }
 

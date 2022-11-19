@@ -1,4 +1,4 @@
-import { Button, Checkbox, Dialog, Heading, Link, Pane, Table, TextInput, TextInputField } from "evergreen-ui"
+import { Button, Checkbox, Dialog, Heading, Link, Pane, Switch, Table, TextInput, TextInputField } from "evergreen-ui"
 import { useEffect, useState } from "react"
 import { useNavigate } from "react-router-dom";
 import { Configuration, GitRepository, RepositoryControllerImplApi } from "../api"
@@ -13,6 +13,7 @@ export const GitRepositories = () => {
   const [logicalCoupling, setLogicalCoupling] = useState(false)
   const [contributorCoupling, setContributorCoupling] = useState(false)
   const [dependencyCoupling, setDependencyCoupling] = useState(false)
+  const [guessClassTask, setGuessClassTask] = useState(false)
 
   const [numberOfServices, setNumberOfServices] = useState(3)
   const [threshold, setThreshold] = useState(20)
@@ -49,7 +50,8 @@ export const GitRepositories = () => {
           logicalCoupling: logicalCoupling,
           dependencyCoupling: dependencyCoupling,
           numberOfServices: numberOfServices,
-          threshold: threshold
+          threshold: threshold,
+          guessClassTask: guessClassTask
         }
       }
     );
@@ -63,7 +65,8 @@ export const GitRepositories = () => {
           semanticCoupling: semanticCoupling,
           contributorCoupling: contributorCoupling,
           logicalCoupling: logicalCoupling,
-          dependencyCoupling: dependencyCoupling
+          dependencyCoupling: dependencyCoupling,
+          guessClassTask: guessClassTask
         }
       }
     );
@@ -150,6 +153,13 @@ export const GitRepositories = () => {
             checked={dependencyCoupling}
             onChange={e => setDependencyCoupling(e.target.checked)}
           />
+          <Checkbox
+            margin={4}
+            marginBottom={24}
+            label="Guess class task"
+            checked={guessClassTask}
+            onChange={e => setGuessClassTask(e.target.checked)}
+          />
           <TextInputField required label="Number of Services" name="numberOfServices" placeholder="3" value={numberOfServices} onChange={(e: any) => setNumberOfServices(e.target.value)} ></TextInputField>
           <TextInputField required label="Threshold" name="threshold" placeholder="20" value={threshold} onChange={(e: any) => setThreshold(e.target.value)} ></TextInputField>
         </Dialog>
@@ -188,6 +198,13 @@ export const GitRepositories = () => {
             label="Dependency Coupling"
             checked={dependencyCoupling}
             onChange={e => setDependencyCoupling(e.target.checked)}
+          />
+          <Checkbox
+            margin={4}
+            marginBottom={24}
+            label="Guess class task"
+            checked={guessClassTask}
+            onChange={e => setGuessClassTask(e.target.checked)}
           />
         </Dialog>
       </Pane>

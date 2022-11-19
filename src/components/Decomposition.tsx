@@ -15,7 +15,7 @@ export const Decomposition = () => {
 
   const callDecomposition = async () => {
     const api = new DecompositionControllerImplApi(API_CONFIG, API_BASE_URL);
-    const response = await api.getDecompositionByIdAsVisualizationUsingGET(Number(decompositionId));
+    const response = await api.getDecompositionByIdAsVisualizationUsingGET(Number(decompositionId), false);
     setData(response.data);
     setLoading(false);
   }
@@ -34,7 +34,7 @@ export const Decomposition = () => {
           <ForceGraph2D
             backgroundColor="white"
             linkColor={_ => "gray"}
-            linkWidth={1}
+            linkWidth={(link: any) => (1/link.value) * 5}
             linkLabel={(link: any) => "Weight: " + link.value + ", Coupling score: " + (1/link.value)}
             nodeLabel="label"
             nodeRelSize={8}
@@ -66,9 +66,6 @@ export const Decomposition = () => {
               }
               node.__bckgDimensions = bckgDimensions; // to re-use in nodePointerAreaPaint
             }}
-            linkDirectionalParticleWidth={3}
-            linkDirectionalParticles="value"
-            linkDirectionalParticleSpeed={(d: any) => (1/d.value) * 0.05}
             graphData={data} />
     </Pane>
   )
