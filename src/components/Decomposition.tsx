@@ -35,7 +35,7 @@ export const Decomposition = () => {
             backgroundColor="white"
             linkColor={_ => "gray"}
             linkWidth={1}
-            linkLabel="value"
+            linkLabel={(link: any) => "Weight: " + link.value + ", Coupling score: " + (1/link.value)}
             nodeLabel="label"
             nodeRelSize={8}
             nodeCanvasObject={(node: any, ctx: any, globalScale: any) => {
@@ -68,7 +68,7 @@ export const Decomposition = () => {
             }}
             linkDirectionalParticleWidth={3}
             linkDirectionalParticles="value"
-            linkDirectionalParticleSpeed={(d: any) => d.value * 0.02}
+            linkDirectionalParticleSpeed={(d: any) => (1/d.value) * 0.05}
             graphData={data} />
     </Pane>
   )

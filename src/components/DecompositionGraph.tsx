@@ -40,9 +40,9 @@ export const DecompositionGraph = () => {
         (<Spinner></Spinner>) : (<></>)}
       <ForceGraph2D
         backgroundColor="white"
-        linkColor={_ => "gray"}
-        linkWidth={1}
-        linkLabel="value"
+        linkColor={_ => "lightgray"}
+        linkWidth={(link: any) => (1/link.value) * 5}
+        linkLabel={(link: any) => "Weight: " + link.value + ", Coupling score: " + (1/link.value)}
         nodeLabel="label"
         nodeRelSize={8}
         nodeCanvasObject={(node: any, ctx: any, globalScale: any) => {
@@ -73,9 +73,6 @@ export const DecompositionGraph = () => {
           node.__bckgDimensions = bckgDimensions; // to re-use in nodePointerAreaPaint
         }}
         nodeAutoColorBy="group"
-        linkDirectionalParticleWidth={3}
-        linkDirectionalParticles="value"
-        linkDirectionalParticleSpeed={(d: any) => d.value * 0.02}
         graphData={data} />
     </Pane>
   )
