@@ -1,4 +1,4 @@
-import { BanCircleIcon, Button, Heading, Pane, Table, TickCircleIcon } from "evergreen-ui"
+import { BanCircleIcon, Button, Checkbox, Heading, Pane, Table, TickCircleIcon } from "evergreen-ui"
 import { useEffect, useState } from "react"
 import { Link, useNavigate } from "react-router-dom";
 import { DecompositionControllerImplApi, DecompositionDto } from "../api"
@@ -8,6 +8,7 @@ import { API_BASE_URL, API_CONFIG } from "../config";
 export const Decompositions = () => {
 
   const [decompositions, setDecompositions] = useState<DecompositionDto[]>([])
+  const [guessClassTask, setGuessClassTask] = useState(false)
 
   useEffect(() => {
     const fetchData = async () => {
@@ -23,7 +24,13 @@ export const Decompositions = () => {
       <Heading size={900} paddingBottom={20}>
         Decompositions
       </Heading>
-
+      <Checkbox
+        margin={4}
+        label="Guess class task"
+        marginBottom={24}
+        checked={guessClassTask}
+        onChange={e => setGuessClassTask(e.target.checked)}
+      />
       <Table>
         <Table.Head>
           <Table.TextHeaderCell>Id</Table.TextHeaderCell>
@@ -48,7 +55,7 @@ export const Decompositions = () => {
               <Table.TextCell>{decomposition?.parameters?.numServices}</Table.TextCell>
               <Table.TextCell>{decomposition?.parameters?.sizeThreshold}</Table.TextCell>
               <Table.Cell>
-                <Link to={'/visualization/' + decomposition?.decompositionId}><Button marginRight={24}>Graph</Button></Link>
+                <Link to={'/visualization/' + decomposition?.decompositionId} state={{ guessClassTask: guessClassTask }}><Button marginRight={24}>Graph</Button></Link>
               </Table.Cell>
             </Table.Row>
           ))}

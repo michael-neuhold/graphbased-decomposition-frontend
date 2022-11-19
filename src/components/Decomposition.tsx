@@ -1,6 +1,6 @@
 import { NumberedListIcon, Pane, Spinner } from "evergreen-ui";
 import { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useLocation, useParams } from "react-router-dom";
 import { DecompositionControllerImplApi } from "../api";
 import { API_BASE_URL, API_CONFIG } from "../config";
 
@@ -13,9 +13,12 @@ export const Decomposition = () => {
   const [loading, setLoading] = useState(true);
   const [data, setData] = useState<any>(undefined);
 
+  const location = useLocation();
+  const guessClassTask = location.state?.guessClassTask;
+
   const callDecomposition = async () => {
     const api = new DecompositionControllerImplApi(API_CONFIG, API_BASE_URL);
-    const response = await api.getDecompositionByIdAsVisualizationUsingGET(Number(decompositionId), false);
+    const response = await api.getDecompositionByIdAsVisualizationUsingGET(Number(decompositionId), guessClassTask);
     setData(response.data);
     setLoading(false);
   }
