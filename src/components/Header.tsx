@@ -1,4 +1,5 @@
 import { Heading, Link, Pane } from "evergreen-ui"
+import { SWAGGER_DOC } from "../config"
 
 export const Header = () => {
   return (
@@ -6,7 +7,7 @@ export const Header = () => {
       <Heading size={600}>
         Graphbased decomposition
       </Heading>
-      <Link href="http://localhost:8080/swagger-ui.html" target="blank">Swagger UI</Link>
+      <Link href={SWAGGER_DOC} target="blank">Swagger UI</Link>
     </Pane>
   )
 }

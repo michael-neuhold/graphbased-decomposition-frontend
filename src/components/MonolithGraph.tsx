@@ -1,6 +1,6 @@
 import { Pane, Spinner } from 'evergreen-ui';
 import { useLocation } from "react-router-dom";
-import ForceGraph2D, { GraphData } from 'react-force-graph-2d';
+import ForceGraph2D from 'react-force-graph-2d';
 import { DecompositionControllerImplApi, MonolithCouplingParametersDto } from '../api';
 import { useEffect, useState } from 'react';
 import { API_BASE_URL, API_CONFIG } from '../config';

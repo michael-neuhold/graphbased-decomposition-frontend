@@ -1,6 +1,6 @@
 import { BanCircleIcon, Button, Checkbox, Heading, Pane, Table, TickCircleIcon } from "evergreen-ui"
 import { useEffect, useState } from "react"
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { DecompositionControllerImplApi, DecompositionDto } from "../api"
 import { API_BASE_URL, API_CONFIG } from "../config";
 

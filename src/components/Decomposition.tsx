@@ -1,4 +1,4 @@
-import { NumberedListIcon, Pane, Spinner } from "evergreen-ui";
+import { Pane, Spinner } from "evergreen-ui";
 import { useEffect, useState } from "react";
 import { useLocation, useParams } from "react-router-dom";
 import { DecompositionControllerImplApi } from "../api";

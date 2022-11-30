@@ -1,7 +1,6 @@
-import { Button, Combobox, Heading, Pane } from "evergreen-ui"
+import { Combobox, Heading, Pane } from "evergreen-ui"
 import { useEffect, useState } from "react"
-import { Link } from "react-router-dom"
-import { Configuration, GitRepository, RepositoryControllerImplApi } from "../api"
+import { GitRepository, RepositoryControllerImplApi } from "../api"
 import { API_BASE_URL, API_CONFIG } from "../config"
 
 export const Monolith = () => {

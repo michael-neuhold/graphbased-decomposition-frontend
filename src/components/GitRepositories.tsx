@@ -1,4 +1,4 @@
-import { Button, Checkbox, Dialog, Heading, Link, Pane, Switch, Table, TextInput, TextInputField } from "evergreen-ui"
+import { Button, Checkbox, Dialog, Heading, Link, Pane, Table, TextInput, TextInputField } from "evergreen-ui"
 import { useEffect, useState } from "react"
 import { useNavigate } from "react-router-dom";
 import { Configuration, GitRepository, RepositoryControllerImplApi } from "../api"
