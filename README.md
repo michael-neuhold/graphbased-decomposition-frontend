@@ -2,7 +2,7 @@
 
 ## How to start
 To start the frontend application a instance of the [backend](https://github.com/michael-neuhold/graphbased-decomposition-backend) needs to run. If this is the case, it is sufficient to
-execute the command below. This woll generate the API interfaces based on the `Swagger` documentation
+execute the command below. This will generate the API interfaces based on the `Swagger` documentation
 and start the react app.
 ````
 npm start
