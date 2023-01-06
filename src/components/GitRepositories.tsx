@@ -30,7 +30,7 @@ export const GitRepositories = () => {
 
   const addNewRepository = () => {
     const addRepository = async () => {
-      const api = new RepositoryControllerImplApi(config, "http://localhost:8080");
+      const api = new RepositoryControllerImplApi(config, "http://localhost:8081");
       const response = await api.addRepositoryUsingPOST({ uri: newRepository })
       console.log(response)
       setAddedRepository(addedRepository + 1);
@@ -73,7 +73,7 @@ export const GitRepositories = () => {
   }
 
   const fetchData = async () => {
-    const api = new RepositoryControllerImplApi(config, "http://localhost:8080");
+    const api = new RepositoryControllerImplApi(config, "http://localhost:8081");
     const repos = await api.getAllRepositoriesUsingGET();
     setRepositories(repos.data);
   }

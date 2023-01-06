@@ -4,6 +4,7 @@ import { Decompositions } from "./Decompositions"
 import { QualityMetrics } from "./QualityMetrics"
 import { GitRepositories } from "./GitRepositories"
 import { PerformanceMetrics } from "./PerformanceMetrics"
+import { Search } from "./Search"
 
 const tabsList = [
   {
@@ -15,13 +16,17 @@ const tabsList = [
     tab: <Decompositions></Decompositions>
   },
   {
+    name: "Search In Decomposition",
+    tab: <Search></Search>
+  },
+  {
     name: "Quality Metrics",
     tab: <QualityMetrics></QualityMetrics>
   },
   {
     name: "Performance Metrics",
     tab: <PerformanceMetrics></PerformanceMetrics>
-  },
+  }
 ]
 
 export const Dashboard = () => {

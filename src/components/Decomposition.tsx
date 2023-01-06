@@ -36,7 +36,7 @@ export const Decomposition = () => {
           (<Spinner></Spinner>) : (<></>)}
           <ForceGraph2D
             backgroundColor="white"
-            linkColor={_ => "gray"}
+            linkColor={_ => "darkgray"}
             linkWidth={(link: any) => (1/link.value) * 5}
             linkLabel={(link: any) => "Weight: " + link.value + ", Coupling score: " + (1/link.value)}
             nodeLabel="label"

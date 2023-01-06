@@ -23,7 +23,7 @@
   },
   "scripts": {
     "start": "npm run generate && react-scripts start",
-    "generate": "npx openapi-generator-cli generate -i  http://localhost:8080/v2/api-docs -g typescript-axios -o ./src/api",
+    "generate": "npx openapi-generator-cli generate -i  http://localhost:8081/v2/api-docs -g typescript-axios -o ./src/api",
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
